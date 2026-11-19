@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cabaana — Software for education and verification</title>
+<meta name="description" content="Cabaana Inc. is a Michigan software company. We build Heto, the clinical education platform for dental schools, and Provero, the API for verifying US businesses and professional licenses.">
+<meta property="og:title" content="Cabaana — Software for education and verification">
+<meta property="og:description" content="Makers of Heto and Provero. Focused software for institutions and developers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.cabaana.com/">
+<meta property="og:image" content="https://www.cabaana.com/assets/cabaana-symbol.png">
+<link rel="icon" type="image/png" href="assets/cabaana-symbol.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E1120; --ink-2:#2A2F45; --muted:#5D6278; --line:#E5E7EF; --soft:#F5F6FA; --bg:#FFFFFF;
+  --magenta:#E0206E; --teal:#3BB08B; --amber:#EBA833;
+  --heto:#D33198; --heto-green:#4CC75A; --provero:#7C3AED;
+  --radius:18px; --max:1180px;
+  --shadow:0 1px 2px rgba(14,17,32,.04),0 12px 40px -12px rgba(14,17,32,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{line-height:1.12;letter-spacing:-.025em;font-weight:800}
+h2{font-size:clamp(32px,4.2vw,50px)}
+h3{font-size:20px;letter-spacing:-.01em;font-weight:700}
+.lede{font-size:clamp(18px,1.6vw,20px);color:var(--muted);max-width:620px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:700;font-size:15px;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;border:1px solid transparent;cursor:pointer;font-family:inherit}
+.btn:hover{transform:translateY(-1px)}
+.btn-dark{background:var(--ink);color:#fff;box-shadow:0 8px 24px -10px rgba(14,17,32,.6)}
+.btn-dark:hover{background:#1d2238}
+.btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:#cfd3df}
+.btn .arr{transition:transform .15s ease}
+.btn:hover .arr{transform:translateX(3px)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav .logo img{height:28px;width:auto}
+.nav ul{display:flex;gap:34px;list-style:none;font-weight:600;font-size:15px;color:var(--ink-2)}
+.nav ul a:hover{color:var(--magenta)}
+.nav .btn{padding:10px 18px;font-size:14px}
+.menu-btn{display:none;background:none;border:0;width:40px;height:40px;cursor:pointer}
+.menu-btn span{display:block;width:22px;height:2px;background:var(--ink);margin:5px auto;border-radius:2px;transition:.2s}
+
+/* HERO */
+.hero{position:relative;padding:96px 0 110px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:900px;height:900px;background:
+  radial-gradient(closest-side,rgba(224,32,110,.16),transparent 70%) 0 0/60% 60% no-repeat,
+  radial-gradient(closest-side,rgba(59,176,139,.16),transparent 70%) 100% 30%/60% 60% no-repeat,
+  radial-gradient(closest-side,rgba(235,168,51,.18),transparent 70%) 40% 100%/60% 60% no-repeat;
+  filter:blur(10px);pointer-events:none}
+.hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center;position:relative}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:14px;font-weight:600;color:var(--ink-2);box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.pill b{background:var(--provero);color:#fff;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+.hero h1{font-size:clamp(40px,5vw,64px);margin:26px 0 22px}
+.hero h1 .grad{background:linear-gradient(100deg,var(--magenta) 0%,var(--amber) 55%,var(--teal) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.hero .meta{display:flex;gap:28px;margin-top:44px;flex-wrap:wrap;color:var(--muted);font-size:14px;font-weight:600}
+.hero .meta span{display:flex;align-items:center;gap:8px}
+.hero .meta i{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+/* product windows */
+.stage{position:relative;height:520px}
+.win{position:absolute;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.win .bar{display:flex;align-items:center;gap:6px;padding:11px 14px;border-bottom:1px solid var(--line);background:#FBFBFD}
+.win .bar i{width:10px;height:10px;border-radius:50%;background:#E3E5EC}
+.win .bar .t{margin-left:10px;font-size:12px;font-weight:600;color:var(--muted)}
+.w-heto{top:0;left:0;width:88%;animation:float 9s ease-in-out infinite}
+.w-prov{bottom:0;right:0;width:72%;background:#0F1124;border-color:#23263d;animation:float 9s ease-in-out -4.5s infinite}
+.w-prov .bar{background:#15182e;border-color:#23263d}
+.w-prov .bar i{background:#2b2f4a}
+.w-prov .bar .t{color:#8b8fb0}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media (prefers-reduced-motion:reduce){.w-heto,.w-prov{animation:none}}
+
+.sched{padding:16px 16px 18px;font-size:12px}
+.sched-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sched-head b{font-size:14px}
+.chip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:#FCE7F3;color:var(--heto)}
+.sgrid{display:grid;grid-template-columns:98px repeat(6,1fr);gap:5px;align-items:center}
+.sgrid .h{font-size:10.5px;color:var(--muted);font-weight:700;text-align:center}
+.sgrid .n{white-space:nowrap;font-weight:600;color:var(--ink-2);font-size:11.5px;display:flex;align-items:center;gap:6px}
+.sgrid .n em{width:18px;height:18px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-style:normal;font-size:9px;font-weight:800;color:var(--muted)}
+.blk{height:24px;border-radius:6px}
+.b1{background:#F9D3E8}.b2{background:#D6F2D9}.b3{background:#FBE9C7}.b4{background:#DCEBFB}.b0{background:transparent;border:1px dashed var(--line)}
+.blk.span2{grid-column:span 2}.blk.span3{grid-column:span 3}
+.legend{display:flex;gap:14px;margin-top:14px;flex-wrap:wrap;color:var(--muted);font-size:11px;font-weight:600}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+.code{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:12px;line-height:1.7;color:#C9CCE6;padding:16px 18px 18px;white-space:pre;overflow:hidden}
+.code .c{color:#6B7092}.code .k{color:#B79CFF}.code .s{color:#7EE0B4}.code .n{color:#FFC879}.code .p{color:#8b8fb0}
+
+/* SECTIONS */
+section{position:relative;scroll-margin-top:72px}
+.sec{padding:120px 0}
+.sec-head{max-width:760px;margin-bottom:56px}
+.sec-head .eyebrow{margin-bottom:16px}
+.sec-head p{margin-top:18px}
+
+/* products overview */
+.prod-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.pcard{position:relative;border:1px solid var(--line);border-radius:24px;padding:40px;background:#fff;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease;display:flex;flex-direction:column;min-height:380px}
+.pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.pcard .top{display:flex;justify-content:space-between;align-items:flex-start}
+.pcard .tag{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+.pcard h3{font-size:28px;margin:28px 0 12px;letter-spacing:-.02em}
+.pcard p{color:var(--muted)}
+.pcard .go{margin-top:auto;padding-top:28px;font-weight:700;display:flex;align-items:center;gap:8px}
+.pcard.heto{background:linear-gradient(160deg,#FFF5FA 0%,#fff 55%)}
+.pcard.heto .tag{background:#FCE7F3;color:var(--heto)}
+.pcard.heto .go{color:var(--heto)}
+.pcard.heto .logo{height:72px;width:auto}
+.pcard.prov{background:linear-gradient(160deg,#F5F0FF 0%,#fff 55%)}
+.pcard.prov .tag{background:#EDE4FF;color:var(--provero)}
+.pcard.prov .go{color:var(--provero)}
+.pcard.prov .logo{height:48px;width:auto;margin-top:12px}
+
+.legacy{display:flex;gap:28px;align-items:center;margin-top:24px;padding:28px 32px;border:1px dashed #D6D9E3;border-radius:24px;background:var(--soft)}
+.legacy img{width:64px;height:auto;flex:none;opacity:.85}
+.legacy .lh{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.legacy .tag{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:999px;background:#E9EBF2;color:var(--muted)}
+.legacy p{color:var(--muted);font-size:15.5px;max-width:820px}
+@media (max-width:760px){.legacy{flex-direction:column;align-items:flex-start;padding:24px;gap:16px}}
+
+/* HETO */
+.heto-sec{background:var(--soft)}
+.heto-intro{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:64px}
+.heto-intro .brand{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+.heto-intro .brand img{height:52px;width:auto}
+.heto-intro .brand .eyebrow{color:var(--heto)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;transition:border-color .2s}
+.feat:hover{border-color:#f0bcd9}
+.feat .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px;background:#FCE7F3;color:var(--heto)}
+.feat:nth-child(3n+2) .ic{background:#E3F7E5;color:#2E9C3B}
+.feat:nth-child(3n+3) .ic{background:#FDF1D9;color:#B97E12}
+.feat .ic svg{width:22px;height:22px}
+.feat h3{margin-bottom:8px}
+.feat p{color:var(--muted);font-size:15.5px}
+.quote{margin-top:64px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:start;background:#fff;border:1px solid var(--line);border-radius:24px;padding:48px}
+.quote .mark{font-size:90px;line-height:.8;font-weight:800;background:linear-gradient(180deg,var(--heto),var(--magenta));-webkit-background-clip:text;background-clip:text;color:transparent}
+.quote blockquote{font-size:clamp(19px,2vw,23px);line-height:1.5;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.quote cite{display:block;margin-top:20px;font-style:normal;font-size:15px;color:var(--muted)}
+.quote cite b{color:var(--ink);font-weight:700}
+.heto-cta{display:flex;gap:12px;margin-top:40px;flex-wrap:wrap}
+.btn-heto{background:var(--heto);color:#fff;box-shadow:0 8px 24px -10px rgba(211,49,152,.7)}
+
+/* PROVERO */
+.prov-sec{background:#0B0D1C;color:#fff;overflow:hidden}
+.prov-sec::before{content:"";position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(closest-side,rgba(124,58,237,.35),transparent);pointer-events:none}
+.prov-sec .eyebrow{color:#A98BFF}
+.prov-sec .lede{color:#A6AAC6}
+.prov-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:center;position:relative}
+.prov-grid .brand img{height:48px;width:auto;margin-bottom:28px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#23263d;border:1px solid #23263d;border-radius:20px;overflow:hidden;margin-top:72px;position:relative}
+.stat{background:#0F1124;padding:30px 26px}
+.stat b{display:block;font-size:clamp(30px,3.4vw,42px);font-weight:800;letter-spacing:-.03em}
+.stat span{color:#8b8fb0;font-size:14px;font-weight:600}
+.apis{display:grid;gap:14px;margin-top:36px}
+.api{display:flex;gap:16px;padding:18px 20px;border:1px solid #23263d;border-radius:14px;background:rgba(255,255,255,.02)}
+.api code{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:#B79CFF;background:rgba(124,58,237,.14);padding:2px 8px;border-radius:6px;white-space:nowrap;align-self:flex-start;margin-top:2px}
+.api h3{font-size:16px;margin-bottom:2px}
+.api p{color:#A6AAC6;font-size:15px}
+.prov-sec .term{background:#0F1124;border:1px solid #23263d;border-radius:16px;box-shadow:0 30px 80px -30px rgba(124,58,237,.45)}
+.prov-sec .term .bar{display:flex;gap:6px;align-items:center;padding:12px 16px;border-bottom:1px solid #23263d}
+.prov-sec .term .bar i{width:10px;height:10px;border-radius:50%;background:#2b2f4a}
+.prov-sec .term .bar .t{margin-left:10px;font-size:12px;color:#8b8fb0;font-weight:600}
+.prov-sec .term .code{font-size:13px;overflow-x:auto}
+.btn-prov{background:var(--provero);color:#fff;box-shadow:0 8px 24px -10px rgba(124,58,237,.9)}
+.btn-ghost-dark{border-color:#2f3352;color:#fff;background:transparent}
+.btn-ghost-dark:hover{border-color:#4a4f75}
+.prov-ctas{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
+
+/* COMPANY */
+.company .grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.company .body p{color:var(--muted);margin-bottom:18px}
+.mission{margin-top:28px;padding:28px 30px;border-left:4px solid;border-image:linear-gradient(180deg,var(--magenta),var(--amber),var(--teal)) 1;background:var(--soft);font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.45}
+.pillars{display:grid;gap:14px}
+.pillar{display:flex;gap:18px;padding:24px;border:1px solid var(--line);border-radius:var(--radius)}
+.pillar .dot{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:800;color:#fff}
+.pillar h3{font-size:17px;margin-bottom:4px}
+.pillar p{color:var(--muted);font-size:15px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.fact{padding:20px;border:1px solid var(--line);border-radius:var(--radius)}
+.fact b{display:block;font-size:15px}
+.fact span{font-size:13px;color:var(--muted);font-weight:600}
+
+/* CONTACT */
+.contact{padding-bottom:120px}
+.cbox{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;border-radius:28px;padding:64px;background:linear-gradient(135deg,#FFF4F8 0%,#FFF9EE 50%,#EFFAF5 100%);border:1px solid var(--line)}
+.cbox .direct{margin-top:32px;display:grid;gap:12px}
+.cbox .direct a{display:flex;align-items:center;gap:12px;font-weight:600}
+.cbox .direct a small{display:block;color:var(--muted);font-weight:600;font-size:13px}
+.cbox .direct .ic{width:40px;height:40px;border-radius:12px;background:#fff;border:1px solid var(--line);display:grid;place-items:center}
+form{display:grid;gap:14px}
+form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{font-size:13px;font-weight:700;color:var(--ink-2);display:grid;gap:6px}
+input,select,textarea{font:inherit;font-size:15px;padding:13px 14px;border:1px solid #DADDE7;border-radius:12px;background:#fff;color:var(--ink);width:100%;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--magenta);box-shadow:0 0 0 4px rgba(224,32,110,.12)}
+textarea{min-height:130px;resize:vertical}
+form .btn{justify-self:start;margin-top:4px}
+.form-note{font-size:13px;color:var(--muted)}
+
+/* FOOTER */
+footer{background:#0B0D1C;color:#A6AAC6;padding:72px 0 36px;font-size:15px}
+footer .top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px;border-bottom:1px solid #1e2138}
+footer .flogo{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;font-size:22px;letter-spacing:-.02em}
+footer .flogo img{height:34px;width:auto}
+footer p{margin-top:14px;max-width:300px}
+footer h4{color:#fff;font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
+footer ul{list-style:none;display:grid;gap:10px}
+footer a:hover{color:#fff}
+footer .bottom{display:flex;justify-content:space-between;padding-top:28px;font-size:13px;flex-wrap:wrap;gap:12px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+/* RESPONSIVE */
+.grid>*,.prov-grid>*,.heto-intro>*,.cbox>*{min-width:0}
+@media (max-width:980px){
+  .hero{padding:64px 0 80px}
+  .hero .grid,.heto-intro,.prov-grid,.company .grid,.cbox{grid-template-columns:1fr;gap:48px}
+  .stage{height:470px;max-width:560px}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  footer .top{grid-template-columns:1fr 1fr}
+  .sec{padding:88px 0}
+}
+@media (max-width:760px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .nav ul,.nav .btn{display:none}
+  .menu-btn{display:block}
+  .nav.open ul{display:grid;position:absolute;top:72px;left:0;right:0;background:#fff;padding:12px 16px 20px;gap:4px;border-bottom:1px solid var(--line)}
+  .nav.open ul a{display:block;padding:12px 4px;font-size:17px}
+  .nav.open .menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav.open .menu-btn span:nth-child(2){opacity:0}
+  .nav.open .menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .prod-cards,.feat-grid,.facts,form .row{grid-template-columns:1fr}
+  .pcard{padding:28px;min-height:0}
+  .stage{height:370px}
+  .api{flex-direction:column;gap:10px}
+  .w-heto{width:100%}.w-prov{width:90%}
+  .sgrid{grid-template-columns:92px repeat(6,1fr)}
+  .quote{grid-template-columns:1fr;padding:28px;gap:8px}
+  .quote .mark{font-size:64px}
+  .cbox{padding:28px}
+  footer .top{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="logo" aria-label="Cabaana home"><img src="assets/cabaana-wordmark.png" alt="Cabaana" width="893" height="145"></a>
+    <ul>
+      <li><a href="#heto">Heto</a></li>
+      <li><a href="#provero">Provero</a></li>
+      <li><a href="#company">Company</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-dark">Talk to us <span class="arr">→</span></a>
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu(this)"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap grid">
+    <div>
+      <a href="#provero" class="pill"><b>New</b> Provero: verify US businesses &amp; licenses with one API →</a>
+      <h1>Focused software for the work institutions <span class="grad">depend on.</span></h1>
+      <p class="lede">Cabaana builds products that take complex, high-stakes administration and make it simple. Heto runs clinical education for dental schools. Provero puts official business and license records behind one fast API.</p>
+      <div class="ctas">
+        <a href="#products" class="btn btn-dark">Explore our products <span class="arr">→</span></a>
+        <a href="#contact" class="btn btn-ghost">Contact sales</a>
+      </div>
+      <div class="meta">
+        <span><i style="background:var(--heto)"></i>Health science education</span>
+        <span><i style="background:var(--provero)"></i>Developer APIs</span>
+        <span><i style="background:var(--teal)"></i>Michigan, USA</span>
+      </div>
+    </div>
+
+    <div class="stage" aria-hidden="true">
+      <div class="win w-heto">
+        <div class="bar"><i></i><i></i><i></i><span class="t">Heto · Rotation schedule</span></div>
+        <div class="sched">
+          <div class="sched-head"><b>D3 Community Rotations — Spring</b><span class="chip">42 students</span></div>
+          <div class="sgrid">
+            <span></span><span class="h">Wk 1</span><span class="h">Wk 2</span><span class="h">Wk 3</span><span class="h">Wk 4</span><span class="h">Wk 5</span><span class="h">Wk 6</span>
+            <span class="n"><em>AK</em>Student 01</span><span class="blk b1 span2"></span><span class="blk b2 span2"></span><span class="blk b0"></span><span class="blk b3"></span>
+            <span class="n"><em>JM</em>Student 02</span><span class="blk b2 span3"></span><span class="blk b4 span3"></span>
+            <span class="n"><em>RL</em>Student 03</span><span class="blk b0"></span><span class="blk b3 span2"></span><span class="blk b1 span3"></span>
+            <span class="n"><em>SP</em>Student 04</span><span class="blk b4 span2"></span><span class="blk b1 span2"></span><span class="blk b2 span2"></span>
+            <span class="n"><em>TN</em>Student 05</span><span class="blk b3 span3"></span><span class="blk b0"></span><span class="blk b4 span2"></span>
+          </div>
+          <div class="legend">
+            <span><i style="background:#F9D3E8"></i>Community clinic</span>
+            <span><i style="background:#D6F2D9"></i>Hospital site</span>
+            <span><i style="background:#FBE9C7"></i>Mobile unit</span>
+            <span><i style="background:#DCEBFB"></i>Rural outreach</span>
+          </div>
+        </div>
+      </div>
+      <div class="win w-prov">
+        <div class="bar"><i></i><i></i><i></i><span class="t">provero · license/search</span></div>
+<div class="code"><span class="c"># Verify a professional license</span>
+<span class="k">GET</span> /license/search?name=<span class="s">"Jane Doe"</span>&amp;state=<span class="s">TX</span>
+<span class="p">{</span>
+  <span class="n">"license_type"</span>: <span class="s">"Registered Nurse"</span>,
+  <span class="n">"status"</span>: <span class="s">"Active"</span>,
+  <span class="n">"expiry_date"</span>: <span class="s">"2027-08-31"</span>
+<span class="p">}</span>  <span class="c">// 68 ms</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="products" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">Our products</p>
+      <h2>Two products. One standard of craft.</h2>
+      <p class="lede">Each Cabaana product solves one hard problem end to end, for the people who live with it every day.</p>
+    </div>
+    <div class="prod-cards">
+      <a class="pcard heto rv" href="#heto">
+        <div class="top"><img class="logo" src="assets/heto-logo.png" alt="Heto" width="361" height="407"><span class="tag">Flagship</span></div>
+        <h3>Clinical education management, simplified.</h3>
+        <p>A cloud platform that helps dental schools run community-based education: rotations, clinics, case logs, evaluations, documents, and reporting in one place.</p>
+        <span class="go">Discover Heto <span>→</span></span>
+      </a>
+      <a class="pcard prov rv" href="#provero">
+        <div class="top"><img class="logo" src="assets/provero-logo.png" alt="Provero" width="499" height="161"><span class="tag">New</span></div>
+        <h3>Verify US businesses and professionals.</h3>
+        <p>REST APIs for business entity verification and professional license lookup, sourced from official state records and served through a single API key.</p>
+        <span class="go">Discover Provero <span>→</span></span>
+      </a>
+    </div>
+    <div class="legacy rv">
+      <img src="assets/cabaana-symbol.png" alt="" width="512" height="384">
+      <div>
+        <div class="lh"><h3>Cabaana app</h3><span class="tag">Legacy</span></div>
+        <p>Where we started: an integrated platform for team communication and collaboration that built team happiness and interaction through a continuous feedback loop, helping organizations improve employee engagement. Its HR-technology roots still shape how we build today.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec heto-sec" id="heto">
+  <div class="wrap">
+    <div class="heto-intro">
+      <div class="rv">
+        <div class="brand"><img src="assets/heto-logo.png" alt="Heto" width="361" height="407"><span class="eyebrow">Heto for Dentistry</span></div>
+        <h2>A fresh approach to healthcare education management.</h2>
+      </div>
+      <p class="lede rv">Heto helps institutions prepare future healthcare professionals more efficiently. Dental schools use it to run every part of their student community outreach programs, from scheduling and clinic management to evaluations and flexible reporting, with data managed securely in the cloud.</p>
+    </div>
+
+    <div class="feat-grid">
+      <div class="feat rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h3M8 18h6"/></svg></div><h3>Scheduling &amp; rotations</h3><p>Assign students to sites ahead of time against your academic calendar. Students see upcoming rotations on their dashboard.</p></div>
+      <div class="feat rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M12 8v4M10 10h4"/></svg></div><h3>Clinic management</h3><p>Manage every partner clinic, assign site administrators, and track preceptors, required documents and submitted case logs.</p></div>
+      <div class="feat rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg></div><h3>Case logs</h3><p>Design case logs to your school's needs. Students log cases at their assigned site, and entries route to preceptors for approval.</p></div>
+      <div class="feat rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div><h3>Evaluations</h3><p>Build custom rubrics and templates for any purpose, and let Heto's scheduler trigger each evaluation at the right time.</p></div>
+      <div class="feat rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4 12 14l-3-3"/></svg></div><h3>Approvals</h3><p>An approval hierarchy with automatic notifications and reminders, so every approver knows what needs attention and when.</p></div>
+      <div class="feat rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div><h3>Student portfolios</h3><p>Students showcase case logs alongside academic and extracurricular credentials, a portfolio that complements their LinkedIn profile.</p></div>
+      <div class="feat rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><h3>Document management</h3><p>Track certificates and immunization records, with reminders before anything expires or comes up for renewal.</p></div>
+      <div class="feat rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div><h3>Reports &amp; dashboards</h3><p>Ready-made reports common to North American dental schools, plus a builder for your own reports and charts.</p></div>
+      <div class="feat rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Roles &amp; admin portal</h3><p>Role-based permissions for clear segregation of duties, and an admin portal to configure Heto to your school's requirements.</p></div>
+    </div>
+
+    <figure class="quote rv">
+      <div class="mark">“</div>
+      <div>
+        <blockquote>Heto has truly empowered our department in how we administer our community education program. Students and preceptors have found Heto easy to navigate and use on a daily basis, and the flexibility of Heto Reports has made our reports team extremely happy.</blockquote>
+        <cite><b>Dr. Divesh Byrappagari</b> · Director, University of Detroit Mercy School of Dentistry</cite>
+      </div>
+    </figure>
+
+    <div class="heto-cta rv">
+      <a href="https://www.hetoonline.com" class="btn btn-heto" target="_blank" rel="noopener">Visit hetoonline.com <span class="arr">→</span></a>
+      <a href="#contact" class="btn btn-ghost" data-interest="Heto">Request a demo</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec prov-sec" id="provero">
+  <div class="wrap">
+    <div class="prov-grid">
+      <div class="rv">
+        <div class="brand"><img src="assets/provero-logo-white.png" alt="Provero" width="499" height="161"></div>
+        <p class="eyebrow">Now live · provero.dev</p>
+        <h2 style="margin:14px 0 18px">Verify US businesses and professionals.</h2>
+        <p class="lede">Two APIs, one platform, one key. Provero pre-loads and indexes official state records so lookups come back as clean, consistent JSON in milliseconds, with no scraping on demand.</p>
+        <div class="apis">
+          <div class="api"><code>/business/search</code><div><h3>Provero Business</h3><p>Corporations, LLCs and partnerships: registration status, registered agent and filing dates.</p></div></div>
+          <div class="api"><code>/license/search</code><div><h3>Provero License</h3><p>Contractors, healthcare workers, real estate agents and more: license type, number, status and expiry.</p></div></div>
+        </div>
+        <div class="prov-ctas">
+          <a href="https://provero.dev" class="btn btn-prov" target="_blank" rel="noopener">Get a free API key <span class="arr">→</span></a>
+          <a href="https://api.provero.dev/docs" class="btn btn-ghost-dark" target="_blank" rel="noopener">Read the docs</a>
+        </div>
+      </div>
+      <div class="term rv">
+        <div class="bar"><i></i><i></i><i></i><span class="t">terminal</span></div>
+<div class="code"><span class="c"># One key for both APIs</span>
+curl https://api.provero.dev/business/search \
+  -H <span class="s">"X-API-Key: pvr_your_key"</span> \
+  -G --data-urlencode <span class="s">"name=Acme Holdings"</span> \
+  -d <span class="s">"state=NY"</span>
+
+<span class="p">{</span>
+  <span class="n">"results"</span>: <span class="p">[{</span>
+    <span class="n">"entity_name"</span>: <span class="s">"ACME HOLDINGS LLC"</span>,
+    <span class="n">"entity_type"</span>: <span class="s">"Domestic LLC"</span>,
+    <span class="n">"entity_number"</span>: <span class="s">"5123456"</span>,
+    <span class="n">"status"</span>: <span class="s">"Active"</span>,
+    <span class="n">"registered_agent"</span>: <span class="s">"…"</span>,
+    <span class="n">"incorporation_date"</span>: <span class="s">"2019-03-14"</span>
+  <span class="p">}]</span>
+<span class="p">}</span></div>
+      </div>
+    </div>
+
+    <div class="stats rv">
+      <div class="stat"><b>9.5M+</b><span>Business records</span></div>
+      <div class="stat"><b>9M+</b><span>License records</span></div>
+      <div class="stat"><b>8</b><span>States covered, and growing</span></div>
+      <div class="stat"><b>&lt;100ms</b><span>Average response time</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec company" id="company">
+  <div class="wrap grid">
+    <div class="body rv">
+      <p class="eyebrow" style="margin-bottom:16px">Company</p>
+      <h2 style="margin-bottom:24px">Engineers for the enterprise’s hardest problems.</h2>
+      <p>Cabaana Inc. is a technology company based in Michigan, USA. We are a team of engineers, analysts, designers and developers who like solving complex problems in the enterprise world, with deep roots in health science education, HR technology and enterprise cloud applications.</p>
+      <p>We build our own products, and we partner with organizations that need dependable software built around the way they actually work.</p>
+      <div class="mission">Our mission is to be the bridge between customers and changing technologies, creating a clear pathway for success.</div>
+    </div>
+    <div class="rv">
+      <div class="pillars">
+        <div class="pillar"><div class="dot" style="background:var(--magenta)">01</div><div><h3>Health science education</h3><p>Heto gives dental schools one system for rotations, clinics, assessments and outcomes.</p></div></div>
+        <div class="pillar"><div class="dot" style="background:var(--amber)">02</div><div><h3>Developer APIs</h3><p>Provero turns fragmented public records into a fast, normalized API.</p></div></div>
+        <div class="pillar"><div class="dot" style="background:var(--teal)">03</div><div><h3>Enterprise applications</h3><p>Process consulting and cloud solution development for organizations with complex workflows.</p></div></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Incorporated</span><b>Michigan, USA</b></div>
+        <div class="fact"><span>Products</span><b>Heto · Provero</b></div>
+        <div class="fact"><span>Focus</span><b>Cloud &amp; APIs</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="cbox rv">
+      <div>
+        <p class="eyebrow" style="margin-bottom:16px">Contact</p>
+        <h2>Let’s talk.</h2>
+        <p class="lede" style="margin-top:18px">Want a Heto demo for your school, higher Provero volumes, or help building an enterprise app? Tell us what you need and we’ll get back to you with answers, solutions and ideas.</p>
+        <div class="direct">
+          <a href="mailto:info@cabaana.com"><span class="ic">✉</span><span><small>General &amp; Heto</small>info@cabaana.com</span></a>
+          <a href="mailto:provero@cabaana.com"><span class="ic">⌘</span><span><small>Provero &amp; API</small>provero@cabaana.com</span></a>
+        </div>
+      </div>
+      <form id="contact-form" novalidate>
+        <div class="row">
+          <label>Name<input name="name" required autocomplete="name"></label>
+          <label>Work email<input name="email" type="email" required autocomplete="email"></label>
+        </div>
+        <div class="row">
+          <label>Organization<input name="org" autocomplete="organization"></label>
+          <label>I’m interested in<select name="interest">
+            <option>Heto</option><option>Provero</option><option>Custom enterprise app</option><option>Something else</option>
+          </select></label>
+        </div>
+        <label>Message<textarea name="message" required></textarea></label>
+        <button class="btn btn-dark" type="submit">Send message <span class="arr">→</span></button>
+        <p class="form-note">This opens your email app with the message ready to send.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <div class="flogo"><img src="assets/cabaana-symbol.png" alt="" width="512" height="384">Cabaana</div>
+        <p>Focused software for institutions and developers. Makers of Heto and Provero.</p>
+      </div>
+      <div><h4>Products</h4><ul><li><a href="https://www.hetoonline.com" target="_blank" rel="noopener">Heto</a></li><li><a href="https://provero.dev" target="_blank" rel="noopener">Provero</a></li><li><a href="https://api.provero.dev/docs" target="_blank" rel="noopener">Provero API docs</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#company">About</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h4>Get in touch</h4><ul><li><a href="mailto:info@cabaana.com">info@cabaana.com</a></li><li><a href="https://twitter.com/cabaanaapp" target="_blank" rel="noopener">X / Twitter</a></li></ul></div>
+    </div>
+    <div class="bottom"><span>© <span id="yr">2026</span> Cabaana Inc. A Michigan corporation.</span><span>Made in Michigan</span></div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>8),{passive:true});
+function toggleMenu(b){const o=nav.classList.toggle('open');b.setAttribute('aria-expanded',o)}
+nav.querySelectorAll('ul a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+document.querySelectorAll('[data-interest]').forEach(a=>a.addEventListener('click',()=>{
+  document.querySelector('select[name=interest]').value=a.dataset.interest;
+}));
+
+document.getElementById('contact-form').addEventListener('submit',e=>{
+  e.preventDefault();
+  const f=e.target;
+  if(!f.reportValidity())return;
+  const d=Object.fromEntries(new FormData(f));
+  const to=d.interest==='Provero'?'provero@cabaana.com':'info@cabaana.com';
+  const subject=`${d.interest} inquiry from ${d.name}${d.org?' ('+d.org+')':''}`;
+  const body=`${d.message}\n\n— ${d.name}\n${d.email}${d.org?'\n'+d.org:''}`;
+  location.href=`mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+});
+</script>
+</body>
+</html>
